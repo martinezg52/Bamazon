@@ -11,6 +11,4 @@ stock_quantity INT DEFAULT 0,
 PRIMARY KEY (item_id)
 );
 
-alter table products add index deparment_name(department_name);
-
 SELECT * FROM products;
