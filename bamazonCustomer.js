@@ -1,3 +1,5 @@
+// Initializing connection to MYSQL DBMS, including username and password as part of boilerplate
+
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var console_table = require("console.table");
@@ -8,13 +10,16 @@ var connection = mysql.createConnection({
 
     user: "root",
 
-    password: "Neutrino#43",
+    password: "Batman123",
     database: "bamazon"
 });
 
 connection.connect(function(err){
     if (err) throw err;
 });
+
+// Setting up a display function to show the initial inventory to the customer, this function runs the select * from query
+//and prints out inventory to screen
 
 var display = function() {
     connection.query("SELECT * FROM products", function(err, results) {
@@ -23,11 +28,16 @@ var display = function() {
     })
 };
 
+// Setting up  a run function to query the mysql database again, this is the main function, it invokes the inquirer prompt
+//prompts the user with the 2 main questions, what product? and how many?
+
 var run = function() {
-    // query the database for all products available for purchase
+
+// queries the database for all products available for purchase
     connection.query("SELECT * FROM products", function(err, results) {
         if (err) throw err;
-        // once you have the products, prompt the user for which they'd like to purchase
+
+//initialize inquirer
         inquirer.prompt([
             {
                 name: "product",
@@ -60,7 +70,10 @@ var run = function() {
                     stock_quantity: chosenProduct.stock_quantity - parseInt(answer.amount)
                 },
                 {
-                    id: chosenProduct.item_id
+                    item_id: chosenProduct.item_id
+    
+//printing out the final summary, which is the total for the item selected or an "insufficient stock" if stock is less than ordered by customer.
+
                 }], function(error) {
                     if (error) throw err;
                     console.log("\n\n");
@@ -88,6 +101,8 @@ var run = function() {
         });
     });
 };
+
+//Invoking the display and run function to re-start the program for the customer to continue buying :)
 
 display();
 run();
