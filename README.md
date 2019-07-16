@@ -1,4 +1,4 @@
-# Bamazon
+# Bamazon (Homework #12, at UCR Coding boot camp by Geoffrey (Geo) Martinez.
 
 DEMO:
 
